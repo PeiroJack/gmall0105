@@ -23,7 +23,7 @@ public class UserController {
         return "hello user";
     }
 
-    @RequestMapping("getAllUser")
+        @RequestMapping("getAllUser")
     @ResponseBody
     public List<UmsMember> getAllUser(){
         List<UmsMember> umsMemberList = userService.getAllUser();
