@@ -27,6 +27,9 @@ public class SpuServiceImpl implements SpuService {
     @Autowired
     PmsBaseSaleAttrMapper pmsBaseSaleAttrMapper;
 
+    @Autowired
+    PmsProductImageMapper pmsProductImageMapper;
+
     @Override
     public List<PmsProductInfo> spuList(String catalog3Id) {
         PmsProductInfo pmsProductInfo = new PmsProductInfo();
@@ -77,8 +80,36 @@ public class SpuServiceImpl implements SpuService {
     }
 
     @Override
+    public List<PmsProductSaleAttr> spuSaleAttrList(String spuId) {
+        PmsProductSaleAttr pmsProductSaleAttr = new PmsProductSaleAttr();
+        pmsProductSaleAttr.setProductId(spuId);
+        List<PmsProductSaleAttr> pmsProductSaleAttrs = pmsProductSaleAttrMapper.select(pmsProductSaleAttr);
+
+        for (PmsProductSaleAttr productSaleAttr : pmsProductSaleAttrs) {
+
+            PmsProductSaleAttrValue pmsProductSaleAttrValue = new PmsProductSaleAttrValue();
+            pmsProductSaleAttrValue.setProductId(spuId);
+            pmsProductSaleAttrValue.setSaleAttrId(productSaleAttr.getSaleAttrId());
+            List<PmsProductSaleAttrValue> pmsProductSaleAttrValues = pmsProductSaleAttrValueMapper.select(pmsProductSaleAttrValue);
+            productSaleAttr.setSpuSaleAttrValueList(pmsProductSaleAttrValues);
+        }
+        return pmsProductSaleAttrs;
+    }
+
+    @Override
+    public List<PmsProductImage> spuImageList(String spuId) {
+        PmsProductImage pmsProductImage = new PmsProductImage();
+        pmsProductImage.setProductId(spuId);
+        List<PmsProductImage> pmsProductImageList = pmsProductImageMapper.select(pmsProductImage);
+        return pmsProductImageList;
+    }
+
+
+    @Override
     public List<PmsBaseSaleAttr> baseSaleAttrList() {
 
         return pmsBaseSaleAttrMapper.selectAll();
     }
+
+
 }
