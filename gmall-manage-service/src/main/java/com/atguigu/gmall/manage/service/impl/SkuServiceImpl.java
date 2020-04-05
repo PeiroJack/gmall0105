@@ -32,7 +32,7 @@ public class SkuServiceImpl implements SkuService {
     PmsSkuSaleAttrValueMapper pmsSkuSaleAttrValueMapper;
 
     @Override
-    public void saveSkuInfo( PmsSkuInfo pmsSkuInfo) {
+    public void saveSkuInfo(PmsSkuInfo pmsSkuInfo) {
         //添加到商品库存单元信息表PmsSkuInfo中
         pmsSkuInfoMapper.insertSelective(pmsSkuInfo);
 
@@ -60,5 +60,21 @@ public class SkuServiceImpl implements SkuService {
             pmsSkuImageMapper.insertSelective(pmsSkuImage);
         }
 
+    }
+
+    @Override
+    public PmsSkuInfo getSkuById(String skuId) {
+        //查寻SkuInfo
+        PmsSkuInfo pmsSkuInfo = new PmsSkuInfo();
+        pmsSkuInfo.setId(skuId);
+        PmsSkuInfo skuInfo = pmsSkuInfoMapper.selectOne(pmsSkuInfo);
+
+        //增加skuImage
+        PmsSkuImage pmsSkuImage = new PmsSkuImage();
+        pmsSkuImage.setSkuId(skuId);
+        List<PmsSkuImage> pmsSkuImageList = pmsSkuImageMapper.select(pmsSkuImage);
+        skuInfo.setSkuImageList(pmsSkuImageList);
+
+        return skuInfo;
     }
 }

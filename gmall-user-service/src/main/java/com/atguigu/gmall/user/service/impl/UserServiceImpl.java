@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
 //        List<UmsMemberReceiveAddress> umsMemberReceiveAddressList = umsMemberReceiveAddressMapper.select(umsMemberReceiveAddress);
 
         Example example = new Example(UmsMemberReceiveAddress.class);
-        example.createCriteria().andEqualTo("memberId",memberId);
+        example.createCriteria().andEqualTo("memberId", memberId);
         List<UmsMemberReceiveAddress> umsMemberReceiveAddressList = umsMemberReceiveAddressMapper.selectByExample(example);
 
         return umsMemberReceiveAddressList;
@@ -71,10 +71,10 @@ public class UserServiceImpl implements UserService {
     public void updatePasswordByUserName(String username, String password) {
         Example example = new Example(UmsMember.class);
         Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("username",username);
+        criteria.andEqualTo("username", username);
         UmsMember umsMember = new UmsMember();
         umsMember.setPassword(password);
-        userMapper.updateByExampleSelective(umsMember,example);
+        userMapper.updateByExampleSelective(umsMember, example);
     }
 
 

@@ -22,7 +22,6 @@ public class GmallManageWebApplicationTests {
     public void contextLoads() throws IOException, MyException {
 
 
-
 //        System.out.println(tracker);
 //        System.out.println(GmallManageWebApplication.class.getResource("/"));
 //        System.out.println(GmallManageWebApplication.class.getResource("/").getPath());
@@ -39,14 +38,14 @@ public class GmallManageWebApplicationTests {
         TrackerServer trackerServer = trackerClient.getTrackerServer();
 
         // 通过tracker获得一个Storage链接客户端
-        StorageClient storageClient = new StorageClient(trackerServer,null);
+        StorageClient storageClient = new StorageClient(trackerServer, null);
 
         String[] uploadInfos = storageClient.upload_file("d:/a.jpg", "jpg", null);
 
         String url = "http://192.168.16.128";
 
         for (String uploadInfo : uploadInfos) {
-            url+="/"+uploadInfo;
+            url += "/" + uploadInfo;
         }
         System.out.println(url);
 

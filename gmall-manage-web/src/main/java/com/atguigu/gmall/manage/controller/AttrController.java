@@ -22,7 +22,7 @@ public class AttrController {
 
     @RequestMapping("attrInfoList")
     @ResponseBody
-    public List<PmsBaseAttrInfo> attrInfoList(String catalog3Id){
+    public List<PmsBaseAttrInfo> attrInfoList(String catalog3Id) {
         List<PmsBaseAttrInfo> pmsBaseAttrInfos = attrService.attrInfoList(catalog3Id);
         return pmsBaseAttrInfos;
     }
@@ -30,8 +30,7 @@ public class AttrController {
 
     @RequestMapping("saveAttrInfo")
     @ResponseBody
-    public String saveAttrInfo(@RequestBody PmsBaseAttrInfo pmsBaseAttrInfo)
-    {
+    public String saveAttrInfo(@RequestBody PmsBaseAttrInfo pmsBaseAttrInfo) {
         String success = attrService.saveAttrInfo(pmsBaseAttrInfo);
         return success;
     }
@@ -39,7 +38,7 @@ public class AttrController {
 
     @RequestMapping("getAttrValueList")
     @ResponseBody
-    public List<PmsBaseAttrValue> getAttrValueList(String attrId){
+    public List<PmsBaseAttrValue> getAttrValueList(String attrId) {
         List<PmsBaseAttrValue> PmsBaseAttrValues = attrService.getAttrValueList(attrId);
         return PmsBaseAttrValues;
     }

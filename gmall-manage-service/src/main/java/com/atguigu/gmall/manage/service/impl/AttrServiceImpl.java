@@ -23,9 +23,6 @@ public class AttrServiceImpl implements AttrService {
     PmsBaseAttrValueMapper pmsBaseAttrValueMapper;
 
 
-
-
-
     @Override
     public List<PmsBaseAttrInfo> attrInfoList(String catalog3Id) {
         PmsBaseAttrInfo pmsBaseAttrInfo = new PmsBaseAttrInfo();
@@ -43,7 +40,7 @@ public class AttrServiceImpl implements AttrService {
     @Override
     public String saveAttrInfo(PmsBaseAttrInfo pmsBaseAttrInfo) {
         String id = pmsBaseAttrInfo.getId();
-        if(StringUtils.isBlank(id)){
+        if (StringUtils.isBlank(id)) {
             //id为空，为保存操作
             pmsBaseAttrInfoMapper.insertSelective(pmsBaseAttrInfo);//添加属性名称表
 
@@ -52,12 +49,12 @@ public class AttrServiceImpl implements AttrService {
                 pmsBaseAttrValue.setAttrId(pmsBaseAttrInfo.getId());
                 pmsBaseAttrValueMapper.insertSelective(pmsBaseAttrValue);
             }
-        }else{
+        } else {
             //修改操作
             //修改平台属性
             Example example = new Example(PmsBaseAttrInfo.class);
-            example.createCriteria().andEqualTo("id",id);
-            pmsBaseAttrInfoMapper.updateByExample(pmsBaseAttrInfo,example);
+            example.createCriteria().andEqualTo("id", id);
+            pmsBaseAttrInfoMapper.updateByExample(pmsBaseAttrInfo, example);
 
             //修改平台属性值
             //删除对应的平台属性值
@@ -79,7 +76,6 @@ public class AttrServiceImpl implements AttrService {
 
         return "success";
     }
-
 
 
     @Override

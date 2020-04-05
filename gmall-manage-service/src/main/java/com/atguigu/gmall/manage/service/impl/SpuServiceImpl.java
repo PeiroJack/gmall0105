@@ -40,7 +40,6 @@ public class SpuServiceImpl implements SpuService {
     }
 
 
-
     @Override
     public String saveSpuInfo(PmsProductInfo pmsProductInfo) {
 //        Pms_product_info
@@ -102,6 +101,21 @@ public class SpuServiceImpl implements SpuService {
         pmsProductImage.setProductId(spuId);
         List<PmsProductImage> pmsProductImageList = pmsProductImageMapper.select(pmsProductImage);
         return pmsProductImageList;
+    }
+
+    @Override
+    public List<PmsProductSaleAttr> spuSaleAttrListCheckBySku(String productId) {
+        PmsProductSaleAttr pmsProductSaleAttr = new PmsProductSaleAttr();
+        pmsProductSaleAttr.setProductId(productId);
+        List<PmsProductSaleAttr> pmsProductSaleAttrList = pmsProductSaleAttrMapper.select(pmsProductSaleAttr);
+        for (PmsProductSaleAttr productSaleAttr : pmsProductSaleAttrList) {
+            PmsProductSaleAttrValue pmsProductSaleAttrValue = new PmsProductSaleAttrValue();
+            pmsProductSaleAttrValue.setProductId(productId);
+            pmsProductSaleAttrValue.setSaleAttrId(productSaleAttr.getSaleAttrId());
+            List<PmsProductSaleAttrValue> pmsProductSaleAttrValueList = pmsProductSaleAttrValueMapper.select(pmsProductSaleAttrValue);
+            productSaleAttr.setSpuSaleAttrValueList(pmsProductSaleAttrValueList);
+        }
+        return pmsProductSaleAttrList;
     }
 
 
