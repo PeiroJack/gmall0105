@@ -104,17 +104,20 @@ public class SpuServiceImpl implements SpuService {
     }
 
     @Override
-    public List<PmsProductSaleAttr> spuSaleAttrListCheckBySku(String productId) {
-        PmsProductSaleAttr pmsProductSaleAttr = new PmsProductSaleAttr();
-        pmsProductSaleAttr.setProductId(productId);
-        List<PmsProductSaleAttr> pmsProductSaleAttrList = pmsProductSaleAttrMapper.select(pmsProductSaleAttr);
-        for (PmsProductSaleAttr productSaleAttr : pmsProductSaleAttrList) {
-            PmsProductSaleAttrValue pmsProductSaleAttrValue = new PmsProductSaleAttrValue();
-            pmsProductSaleAttrValue.setProductId(productId);
-            pmsProductSaleAttrValue.setSaleAttrId(productSaleAttr.getSaleAttrId());
-            List<PmsProductSaleAttrValue> pmsProductSaleAttrValueList = pmsProductSaleAttrValueMapper.select(pmsProductSaleAttrValue);
-            productSaleAttr.setSpuSaleAttrValueList(pmsProductSaleAttrValueList);
-        }
+    public List<PmsProductSaleAttr> spuSaleAttrListCheckBySku(String productId,String skuId) {
+
+
+        List<PmsProductSaleAttr> pmsProductSaleAttrList = pmsProductSaleAttrMapper.selectSpuSaleAttrListCheckBySku(productId,skuId);
+//        PmsProductSaleAttr pmsProductSaleAttr = new PmsProductSaleAttr();
+//        pmsProductSaleAttr.setProductId(productId);
+//        List<PmsProductSaleAttr> pmsProductSaleAttrList = pmsProductSaleAttrMapper.select(pmsProductSaleAttr);
+//        for (PmsProductSaleAttr productSaleAttr : pmsProductSaleAttrList) {
+//            PmsProductSaleAttrValue pmsProductSaleAttrValue = new PmsProductSaleAttrValue();
+//            pmsProductSaleAttrValue.setProductId(productId);
+//            pmsProductSaleAttrValue.setSaleAttrId(productSaleAttr.getSaleAttrId());
+//            List<PmsProductSaleAttrValue> pmsProductSaleAttrValueList = pmsProductSaleAttrValueMapper.select(pmsProductSaleAttrValue);
+//            productSaleAttr.setSpuSaleAttrValueList(pmsProductSaleAttrValueList);
+//        }
         return pmsProductSaleAttrList;
     }
 

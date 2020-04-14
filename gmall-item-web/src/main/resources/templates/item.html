@@ -12,7 +12,7 @@
 	<body>
 		<div id="max">
 		<header>
-
+			<input type="text" th:value="${skuSaleAttrHashJsonStr}" id="valuesSku"/>
 					<div class="min">
 						<ul class="header_ul_left">
 							<li class="glyphicon glyphicon-home"> <a href="shouye.html" class="aa">首页</a></li>
@@ -174,7 +174,7 @@
 								<li>惊喜价</li>
 								<li>
 									<span>￥</span>
-									<span th:text="${skuInfo?.price}">4499.00</span>
+									<span th:text="${#numbers?.formatDecimal(skuInfo.price,1,2)}">4499.00</span>
 								</li>
 								<li>
 								 
@@ -214,7 +214,7 @@
  
 
 								</li>
-								<li  th:text="${skuInfo?.weight}+' kg'">
+								<li  th:text="${#numbers.formatDecimal(skuInfo?.weight,1,2)}+' kg'">
 									  10 kg
 								</li>
  
@@ -226,7 +226,7 @@
 							<div class="box-attr-2 clear"  th:each="spuSaleAttr:${spuSaleAttrListCheckBySku}">
 								<dl>
 									<dt th:text="${spuSaleAttr.saleAttrName}">选择颜色</dt>
-									<dd  th:class="redborder" th:each="saleAttrValue:${spuSaleAttr.spuSaleAttrValueList}">
+									<dd  th:class="(${saleAttrValue.isChecked}=='1')?'redborder':''" th:each="saleAttrValue:${spuSaleAttr.spuSaleAttrValueList}">
 										<div th:value="${saleAttrValue.id}" th:text="${saleAttrValue.saleAttrValueName}">
 											  摩卡金
 										</div>
@@ -1009,6 +1009,7 @@
 	</body>
 
 	<script src="/js/jquery1.9.js" type="text/javascript" charset="utf-8"></script>
+<!--	<script src="/js/spuId_66.js" type="text/javascript" charset="utf-8"></script>-->
 	<script src="/js/js.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
         function addToCart(obj){
@@ -1020,36 +1021,62 @@
         }
 
         function switchSkuId() {
-            // 被选中属性
-            var checkDivs = $(".redborder div");
-            var valueIds="";
-            // 拼接成属性值串
-            for (var i = 0; i < checkDivs.length; i++) {
-                var saleAttrValueDiv = checkDivs.eq(i);
-                if(i>0){
-                    valueIds= valueIds+"|";
-                }
-                valueIds=valueIds+saleAttrValueDiv.attr("value");
-            }
-            //页面上的hashjson
-            var valuesSku = $("#valuesSku").attr("value");
-            var valuesSkuJson=JSON.parse(valuesSku);
+        	var skuSaleAttrHashJsonStr = $("#valuesSku").val();
 
-            // 看看hash有没有
-            var skuId= valuesSkuJson[valueIds];
-            // 当前sku
-            var skuIdSelf=$("#skuId").val();
+        	alert(skuSaleAttrHashJsonStr);
 
-            // 判断是否跳转
-            if(skuId){
-                if(skuId==skuIdSelf){
-                    $("#cartBtn").attr("class","box-btns-two");
-                }else{
-                    window.location.href="/"+skuId+".html";
-                }
-            }else{
-                $("#cartBtn").attr("class","box-btns-two-off");
-            }
+        	var saleAttrValueIds = $(".redborder div");
+
+        	var k ="";
+
+        	$(saleAttrValueIds).each(function (i,saleAttrValueId) {
+        				k = k + $(saleAttrValueId).attr("value") + "|";
+				// alert($(saleAttrValueId).val());
+			});
+
+        	alert(k);
+
+        	var skuSaleAttrHashJson = JSON.parse(skuSaleAttrHashJsonStr);
+
+			var v_skuId = skuSaleAttrHashJson[k];
+
+			alert(v_skuId);
+
+			if (v_skuId) {
+				window.location.href = "http://item.gmall.com/" + v_skuId + ".html";
+			}
+
+
+            // // 被选中属性
+            // var checkDivs = $(".redborder div");
+            // var valueIds="";
+            // // 拼接成属性值串
+            // for (var i = 0; i < checkDivs.length; i++) {
+            //     var saleAttrValueDiv = checkDivs.eq(i);
+            //     if(i>0){
+            //         valueIds= valueIds+"|";
+            //     }
+            //     valueIds=valueIds+saleAttrValueDiv.attr("value");
+            // }
+            // //页面上的hashjson
+            // var valuesSku = $("#valuesSku").attr("value");
+            // var valuesSkuJson=JSON.parse(valuesSku);
+			//
+            // // 看看hash有没有
+            // var skuId= valuesSkuJson[valueIds];
+            // // 当前sku
+            // var skuIdSelf=$("#skuId").val();
+			//
+            // // 判断是否跳转
+            // if(skuId){
+            //     if(skuId==skuIdSelf){
+            //         $("#cartBtn").attr("class","box-btns-two");
+            //     }else{
+            //         window.location.href="/"+skuId+".html";
+            //     }
+            // }else{
+            //     $("#cartBtn").attr("class","box-btns-two-off");
+            // }
         }
 	</script>
 
